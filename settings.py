@@ -10,3 +10,10 @@ class Settings():
 
         # Configurações da nave
         self.ship_speed_factor = 1.5
+
+        # Configurações dos projéteis
+        self.bullet_speed_factor = 1
+        self.bullet_width = 3
+        self.bullet_height = 15
+        self.bullet_color = ('blue')
+        self.bullets_allowed = 3
