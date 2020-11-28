@@ -24,7 +24,7 @@ class Ship():
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-    
+
     def update(self):
         """Atualiza a posição da nave de acordo com a flag de movimento."""
         if self.moving_right and self.rect.right < self.screen_rect.right:
@@ -43,3 +43,8 @@ class Ship():
     def blitme(self):
         """Desenha sua espaçonave em sua posição atual."""
         self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """Centraliza a nava na tela."""
+        self.centerx = self.screen_rect.centerx
+        self.centery = self.screen_rect.bottom - (0.5 * self.rect.height)
