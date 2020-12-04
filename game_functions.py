@@ -5,7 +5,7 @@ import pygame
 from bullet import Bullet
 from alien import Alien
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, screen, stats, aliens, ship, bullets):
     """Responde a pressionamento de tecla."""
     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
         ship.moving_right = True
@@ -19,6 +19,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_ESCAPE:
         sys.exit()
+    elif event.key == pygame.K_p and not stats.game_active:
+        reset_game(ai_settings, screen, stats, ship, aliens, bullets)
 
 def fire_bullet(ai_settings, screen, ship, bullets):
     """Dispara u m projétil se  o limite n for atingido"""
@@ -48,7 +50,7 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
 
         # Controla os movimentos da nave 
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings,  screen, ship, bullets)
+            check_keydown_events(event, ai_settings,  screen, stats, aliens, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -60,22 +62,23 @@ def check_play_button(ai_settings, screen, stats,
                       play_button, ship, aliens, bullets, mouse_x, mouse_y):
     """Inicia um novo jogo quando o jogador clica em play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
-
     if button_clicked and not stats.game_active:
-        # Oculta o cursor do mouse 
-        pygame.mouse.set_visible(False)
+        reset_game(ai_settings, screen, stats, ship, aliens, bullets)
 
-        # Reinicia os dados estatísticos do jogo
-        stats.reset_stats()
-        stats.game_active = True
+def reset_game(ai_settings, screen, stats, ship, aliens, bullets):
+    # Oculta o cursor do mouse 
+    pygame.mouse.set_visible(False)
+    # Reinicia os dados estatísticos do jogo
+    stats.reset_stats()
+    stats.game_active = True
 
-        # Esvazia a lista de aliens e de projéteis
-        aliens.empty()
-        bullets.empty()
+    # Esvazia a lista de aliens e de projéteis
+    aliens.empty()
+    bullets.empty()
 
-        # Cria uma nova frota e centraliza a nave
-        create_fleet(ai_settings, screen, ship, aliens)
-        ship.center_ship()
+    # Cria uma nova frota e centraliza a nave
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
 
 def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
     """Atualiza as imagens na tela e alterna para a nova tela."""
