@@ -5,8 +5,8 @@ class GameStats():
         self.ai_settings = ai_settings
         self.reset_stats()
 
-        # Inicia a invasão em um estado ativo
-        self.game_active = True
+        # Inicia a invasão em um estado inativo
+        self.game_active = False
 
     def reset_stats(self):
         """Inicializa os dados estatísticos que podem mudar durante o jogo."""
