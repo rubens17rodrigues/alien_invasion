@@ -9,7 +9,11 @@ class GameStats():
         self.game_active = False
 
         # A pontuação máxima n deve ser reiniciada
-        self.high_score = 0
+        try:
+            with open ('high_score.txt') as file_object:
+                self.high_score = int(file_object.read())
+        except FileNotFoundError:
+             self.high_score = 0
 
     def reset_stats(self):
         """Inicializa os dados estatísticos que podem mudar durante o jogo."""

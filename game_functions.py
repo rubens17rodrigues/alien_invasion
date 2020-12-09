@@ -18,7 +18,7 @@ def check_keydown_events(event, ai_settings, screen, stats, sb, aliens, ship, bu
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_ESCAPE:
-        sys.exit()
+        exit_game(stats)
     elif event.key == pygame.K_p and not stats.game_active:
         reset_game(ai_settings, screen, stats, sb, ship, aliens, bullets)
 
@@ -46,7 +46,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
     for event in pygame.event.get():
         # Sai do jogo
         if event.type == pygame.QUIT:
-            sys.exit()
+            exit_game(stats)
 
         # Controla os movimentos da nave 
         elif event.type == pygame.KEYDOWN:
@@ -241,3 +241,8 @@ def check_high_score(stats, sb):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sb.prep_high_score()
+
+def exit_game(stats):
+    with open ('high_score.txt', 'w') as file_object:
+        file_object.write (str(stats.high_score))
+    sys.exit()
